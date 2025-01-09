@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from config.settings import COL_DICT
+import numpy as np
 
 def load_logs(log_file):
     """Load logs from a JSON file."""
@@ -44,4 +45,22 @@ def create_dataframe(steps_original, queue_delays_original, packet_lengths_origi
         for packet, delay in zip(packet_lengths_llm, queue_delays_llm)
     ]
     
-    return pd.DataFrame(data, index=steps_original[:min_length])
+        # Calculate CDF for each of the relevant columns and add them as new rows
+    cdf_data = {
+        'Original Loss CDF': np.cumsum(losses_original[:min_length]),
+        'Original Queue Delay CDF': np.cumsum(queue_delays_original[:min_length]),
+        'Original Packet Length CDF': np.cumsum(packet_lengths_original[:min_length]),
+        'LLM Loss CDF': np.cumsum(losses_llm[:min_length]),
+        'LLM Queue Delay CDF': np.cumsum(queue_delays_llm[:min_length]),
+        'LLM Packet Length CDF': np.cumsum(packet_lengths_llm[:min_length]),
+        'Original Throughput CDF': np.cumsum(data['Original Throughput']),
+        'LLM Throughput CDF': np.cumsum(data['LLM Throughput']),
+    }
+    
+    # Add CDF values as new rows
+    cdf_df = pd.DataFrame(cdf_data)  # Create rows labeled 'CDF'
+    # Create the DataFrame
+    df = pd.DataFrame(data, index=steps_original[:min_length])
+    
+    
+    return df, cdf_df

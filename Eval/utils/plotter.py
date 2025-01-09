@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import os
-from config.settings import colors, markers, linestyles
-def save_plot(fig, filename, folder, formats, dpi):
+from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS
+# Function to save the plot in different formats
+def save_plot(fig, filename, folder):
     """Save a plot in multiple formats."""
     os.makedirs(folder, exist_ok=True)
-    for fmt in formats:
-        fig.savefig(f"{folder}/{filename}.{fmt}", dpi=dpi, bbox_inches='tight')
+    for fmt in SAVE_FORMATS:
+        fig.savefig(f"{folder}/{filename}.{fmt}", dpi=DPI, bbox_inches='tight')
 
-def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, folder, formats, dpi):
+def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, folder):
     """
     Plot a line comparison graph for multiple columns and save it.
 
@@ -39,12 +40,12 @@ def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, f
     ax.legend()
     ax.grid(True)
     plt.tight_layout()
-    save_plot(fig, filename, folder, formats, dpi)
+    save_plot(fig, filename, folder)
     plt.close(fig)
 
 
 
-def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder, formats, dpi):
+def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder):
     """
     Plot a box comparison graph and save it, with custom colors for each box.
 
@@ -85,6 +86,6 @@ def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder, fo
     ax.grid(True)
 
     plt.tight_layout()
-    save_plot(fig, filename, folder, formats, dpi)
+    save_plot(fig, filename, folder)
     plt.close(fig)
 

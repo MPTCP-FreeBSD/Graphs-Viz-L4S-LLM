@@ -16,7 +16,7 @@ def main():
     steps_llm, queue_delays_llm, packet_lengths_llm, losses_llm = extract_data(llm_logs)
     
     # Create DataFrame
-    df = create_dataframe(steps_original, queue_delays_original, packet_lengths_original, losses_original,
+    df, cdf_data = create_dataframe(steps_original, queue_delays_original, packet_lengths_original, losses_original,
                           steps_llm, queue_delays_llm, packet_lengths_llm, losses_llm)
     
     # Save processed DataFrame (optional)
@@ -37,9 +37,7 @@ def main():
         ylabel='Queue Delay',
         title='Queue Delay Comparison: Original vs LLAMA',
         filename=f"{eval_tag}_queue_delay_comparison",
-        folder=tagged_folder,
-        formats=SAVE_FORMATS,
-        dpi=DPI
+        folder=tagged_folder
     )
 
     # Plot queue delay box plot comparison using the updated box plot function
@@ -50,9 +48,7 @@ def main():
         ylabel='Queue Delay',
         title='Queue Delay Comparison (Box Plot): Original vs LLAMA',
         filename=f"{eval_tag}_queue_delay_box_comparison",
-        folder=tagged_folder,
-        formats=SAVE_FORMATS,
-        dpi=DPI
+        folder=tagged_folder
     )
 
     # Plot throughput comparison using the updated line plot function
@@ -64,9 +60,7 @@ def main():
         ylabel='Throughput',
         title='Throughput Comparison: Original vs LLAMA',
         filename=f"{eval_tag}_throughput_comparison",
-        folder=tagged_folder,
-        formats=SAVE_FORMATS,
-        dpi=DPI
+        folder=tagged_folder
     )
 
     # Plot throughput box plot comparison using the updated box plot function
@@ -77,11 +71,33 @@ def main():
         ylabel='Throughput',
         title='Throughput Comparison (Box Plot): Original vs LLAMA',
         filename=f"{eval_tag}_throughput_box_comparison",
-        folder=tagged_folder,
-        formats=SAVE_FORMATS,
-        dpi=DPI
+        folder=tagged_folder
     )
 
 
+
+    # Plot throughput comparison using the updated line plot function
+    plot_line_comparison(
+        cdf_data,
+        columns=['Original Throughput CDF', 'LLM Throughput CDF'],
+        labels=['Original Throughput CDF', 'LLM Throughput CDF'],
+        xlabel='Step Number',
+        ylabel='Throughput',
+        title='Throughput Comparison: Original vs LLAMA',
+        filename=f"{eval_tag}_throughput_comparison_CDF",
+        folder=tagged_folder
+    )
+
+    # Plot queue delay comparison using the updated line plot function
+    plot_line_comparison(
+        cdf_data,
+        columns=['Original Queue Delay CDF', 'LLM Queue Delay CDF'],
+        labels=['Original Queue Delay CDF', 'LLM Queue Delay CDF'],
+        xlabel='Step Number',
+        ylabel='Queue Delay CDF',
+        title='Queue Delay CDF Comparison: Original vs LLAMA',
+        filename=f"{eval_tag}_queue_delay_comparison_CDF",
+        folder=tagged_folder
+    )
 if __name__ == "__main__":
     main()
