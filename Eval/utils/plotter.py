@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS
+
 # Function to save the plot in different formats
 def save_plot(fig, filename, folder):
     """Save a plot in multiple formats."""
