@@ -26,6 +26,8 @@ def parse_logs(log_dir, log_files, model_tag):
     mean_gpu_usage, mean_vram_usage = [], []
     mean_disk_read_speed, mean_disk_write_speed = [], []
 
+    mean_timestamps_each_step = []
+
     for log_file in log_files:
         epoch_number = int(log_file.split('_')[-1].split('.')[0])
         epoch_numbers.append(epoch_number)
@@ -39,6 +41,8 @@ def parse_logs(log_dir, log_files, model_tag):
             
             actions_preds = [step['actions_pred'] for step in data['steps']]
             actions = [step['actions'] for step in data['steps']]
+            timestamps_each_step = [float(step['timestamps_each_step']) for step in data['steps']]
+            mean_timestamps_each_step.append(np.mean(timestamps_each_step))
 
             # Losses
             mean_losses.append(np.mean(losses))
@@ -60,7 +64,9 @@ def parse_logs(log_dir, log_files, model_tag):
             mean_vram_usage.append(np.mean([step['VRAM Usage'] for step in data['steps']]))
             mean_disk_read_speed.append(np.mean([step['Disk Read Speed (MB/s)'] for step in data['steps']]))
             mean_disk_write_speed.append(np.mean([step['Disk Write Speed (MB/s)'] for step in data['steps']]))
-
+    
+    print("mean_timestamps_each_step",np.mean(mean_timestamps_each_step))
+   
     return pd.DataFrame({
         'Epoch': epoch_numbers,
         'Mean Loss': mean_losses,
