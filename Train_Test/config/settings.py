@@ -26,3 +26,10 @@ COL_DICT = {
     'total_drops': 7,
     'packet_length': 8
 }
+
+
+bar_width = 0.3
+
+figsize = (8,6)
+
+title_req = True

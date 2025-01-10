@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 import itertools
 
-from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS
+from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS, bar_width as global_bar_width , figsize as global_figsize, title_req
 
 
 # Color, marker, and linestyle options
@@ -42,7 +42,8 @@ def plot_metric(df, x_column, y_columns, labels, title, xlabel, ylabel, filename
             marker=marker, 
             linestyle=linestyle
         )
-    
+    if not title_req:
+        title = ""
     # Set plot properties
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.legend()
@@ -57,7 +58,7 @@ def plot_metric(df, x_column, y_columns, labels, title, xlabel, ylabel, filename
 # Function to plot multiple datasets for comparison
 def plot_comparison(dfs, x_column, y_column, labels, title, xlabel, ylabel, filename, folder):
     """Compare multiple datasets on a single plot."""
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=DPI)
+    fig, ax = plt.subplots(figsize=(6, 4), dpi=DPI)
     
     # Create iterators for cycling through colors, markers, and linestyles
     color_cycle = itertools.cycle(colors)
@@ -78,7 +79,10 @@ def plot_comparison(dfs, x_column, y_column, labels, title, xlabel, ylabel, file
             marker=marker, 
             linestyle=linestyle
         )
-    
+
+    if not title_req:
+        title = ""
+
     # Set plot properties
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.legend()

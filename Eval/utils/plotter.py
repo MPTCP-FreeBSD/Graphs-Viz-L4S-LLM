@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import os
-from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS
+from config.settings import colors, markers, linestyles, DPI, SAVE_FORMATS, bar_width as global_bar_width , figsize as global_figsize, title_req
 
 # Function to save the plot in different formats
 def save_plot(fig, filename, folder):
@@ -29,7 +29,7 @@ def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, f
     # markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
     # linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(6, 4))
 
     for i, (column, label) in enumerate(zip(columns, labels)):
         color = colors[i % len(colors)]
@@ -37,6 +37,9 @@ def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, f
         linestyle = linestyles[i % len(linestyles)]
         ax.plot(df.index, df[column], color=color, marker=marker, linestyle=linestyle, label=label)
 
+    if not title_req:
+        title = ""
+        
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.legend()
     ax.grid(True)
@@ -63,7 +66,7 @@ def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder):
     """
     # colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed
     
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(6, 4))
 
     # Boxplot
     box = ax.boxplot(
@@ -77,6 +80,9 @@ def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder):
     for patch, color in zip(box['boxes'], colors[:len(columns)]):
         patch.set_facecolor(color)
         patch.set_edgecolor('black')
+    
+    if not title_req:
+        title = ""
 
     ax.set(
         title=title, 
