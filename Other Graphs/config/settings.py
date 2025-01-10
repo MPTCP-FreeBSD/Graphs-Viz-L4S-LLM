@@ -10,6 +10,8 @@ linestyles = ['-', '-', '-.', ':']                      # Add more linestyles as
 
 bar_width = 0.2
 
+figsize = (4,3)
+
 # colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed
 # markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
 # linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed

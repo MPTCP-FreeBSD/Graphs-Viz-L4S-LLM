@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import os
-from config.settings import colors, DPI, SAVE_FORMATS, bar_width
+from config.settings import colors, DPI, SAVE_FORMATS, bar_width as global_bar_width , figsize as global_figsize
 import seaborn as sns
 import numpy as np
 # Set plotting style
@@ -38,12 +38,12 @@ def save_plot(fig, filename, folder):
 #     plt.close(fig)
 
 # Function to create bar plots
-def plot_bar(data,labels, ylabel,title, filename, folder, colors=colors, bar_width=bar_width):
+def plot_bar(data,labels, ylabel,title, filename, folder, colors=colors, bar_width=global_bar_width, figsize=global_figsize):
     """Create a bar plot for given labels and data."""
     positions = np.arange(len(labels))
 
     # Initialize the plot
-    fig, ax = plt.subplots(figsize=(6, 4), dpi=DPI)
+    fig, ax = plt.subplots(figsize=figsize, dpi=DPI)
 
     # Create the bars
     bars = ax.bar(positions, data, width=bar_width, color=colors or 'blue')
@@ -51,7 +51,7 @@ def plot_bar(data,labels, ylabel,title, filename, folder, colors=colors, bar_wid
     # Add value annotations
     for bar in bars:
         yval = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2, yval + 0.02 * max(data), f"{yval:.2f}", 
+        ax.text(bar.get_x() + bar.get_width()/2, yval + 0.005 * max(data), f"{yval:.2f}", 
                 ha='center', va='bottom')
 
     # Set labels and ticks
