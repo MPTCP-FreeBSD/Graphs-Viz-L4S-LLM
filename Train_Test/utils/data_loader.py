@@ -64,6 +64,8 @@ def parse_logs(log_dir, log_files, model_tag):
             mean_vram_usage.append(np.mean([step['VRAM Usage'] for step in data['steps']]))
             mean_disk_read_speed.append(np.mean([step['Disk Read Speed (MB/s)'] for step in data['steps']]))
             mean_disk_write_speed.append(np.mean([step['Disk Write Speed (MB/s)'] for step in data['steps']]))
+
+    print("log_dir",log_dir)
     
     print("mean_timestamps_each_step",np.mean(mean_timestamps_each_step))
    

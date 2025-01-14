@@ -28,7 +28,7 @@ def plot_bar(data,labels, ylabel,title, filename, folder, colors=colors, bar_wid
     # Add value annotations
     for bar in bars:
         yval = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2, yval + 0.005 * max(data), f"{yval:.2f}", 
+        ax.text(bar.get_x() + bar.get_width()/2, yval + 0.005 * max(data), f"{yval:.3f}", 
                 ha='center', va='bottom')
         
     if not title_req:

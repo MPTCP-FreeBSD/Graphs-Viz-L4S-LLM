@@ -90,6 +90,7 @@ def plot_comparison(dfs, x_column, y_column, labels, title, xlabel, ylabel, file
     
     # Tight layout and save the plot
     plt.tight_layout()
+    print("folder save", folder)
     save_plot(fig, filename, folder)
     plt.close(fig)
 
