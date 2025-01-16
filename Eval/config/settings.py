@@ -27,6 +27,16 @@ COL_DICT = {
     'packet_length': 8
 }
 
+COL_DICT = {
+    'queue_type': 0,
+    'burst_allowance': 1,
+    'drop_probability': 2,
+    'current_queue_delay': 3,
+    'accumulated_probability': 4,
+    'length_in_bytes': 5,
+    'packet_length': 6
+}
+
 bar_width = 0.3
 
 figsize = (8,6)

@@ -18,6 +18,18 @@ def extract_data(logs):
         losses.append(step_log['test_loss'])
     return steps, queue_delays, packet_lengths, losses
 
+def return_extract_data(logs):
+    """Extract steps, queue delays, packet lengths, and test losses from logs."""
+    steps, queue_delays, packet_lengths, losses = [], [], [], []
+    returns = []
+    for step_log in logs['steps']:
+        steps.append(step_log['step'])
+        queue_delays.append(step_log['states'][0][0][COL_DICT['current_queue_delay']])
+        packet_lengths.append(step_log['states'][0][0][COL_DICT['packet_length']])
+        losses.append(step_log['test_loss'])
+        returns.append(step_log['returns'][0][0][0])
+        # print(step_log['returns'][0][0][0])
+    return steps, queue_delays, packet_lengths, losses, returns
 
 import numpy as np
 import pandas as pd
