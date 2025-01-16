@@ -47,6 +47,43 @@ def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, f
     save_plot(fig, filename, folder)
     plt.close(fig)
 
+def cdf_plot_line_comparison(df, index_rows, columns, labels, xlabel, ylabel, title, filename, folder):
+    """
+    Plot a line comparison graph for multiple columns and save it.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame containing the data.
+        columns (list): List of column names to plot.
+        labels (list): List of labels for the legend corresponding to the columns.
+        xlabel (str): Label for the X-axis.
+        ylabel (str): Label for the Y-axis.
+        title (str): Title of the plot.
+        filename (str): Name of the file to save the plot.
+        folder (str): Folder where the plot will be saved.
+        formats (list): List of formats to save the plot.
+        dpi (int): DPI resolution for the saved plot.
+    """
+    # colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed
+    # markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
+    # linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+
+    for i, (column, label) in enumerate(zip(columns, labels)):
+        color = colors[i % len(colors)]
+        marker = markers[i % len(markers)]
+        linestyle = linestyles[i % len(linestyles)]
+        ax.plot(df[index_rows], df[column], color=color, marker=marker, linestyle=linestyle, label=label)
+
+    if not title_req:
+        title = ""
+        
+    ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
+    ax.legend()
+    ax.grid(True)
+    plt.tight_layout()
+    save_plot(fig, filename, folder)
+    plt.close(fig)
 
 
 def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder):

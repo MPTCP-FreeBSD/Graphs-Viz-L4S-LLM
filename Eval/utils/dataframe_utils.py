@@ -19,13 +19,19 @@ def extract_data(logs):
     return steps, queue_delays, packet_lengths, losses
 
 
+import numpy as np
+import pandas as pd
+
 def create_dataframe(steps_original, queue_delays_original, packet_lengths_original, losses_original, 
                      steps_llm, queue_delays_llm, packet_lengths_llm, losses_llm):
-    """Create a DataFrame with extracted data."""
+    """Create a DataFrame with extracted data and calculate CDFs."""
+    
+    # Ensure the data is of the same length by trimming the longest data set
     min_length = min(len(steps_original), len(queue_delays_original), len(packet_lengths_original),
                      len(losses_original), len(steps_llm), len(queue_delays_llm), 
                      len(packet_lengths_llm), len(losses_llm))
     
+    # Create the initial data dictionary
     data = {
         'Original Loss': losses_original[:min_length],
         'Original Queue Delay': queue_delays_original[:min_length],
@@ -35,32 +41,46 @@ def create_dataframe(steps_original, queue_delays_original, packet_lengths_origi
         'LLM Packet Length': packet_lengths_llm[:min_length],
     }
     
-    # Add throughput calculations as floats
+    # Calculate throughput for Original and LLM
     data['Original Throughput'] = [
-        float(packet) / float(delay) if delay != 0 else 0.0 
+        float(packet/1024) / float(delay/1000000) if delay != 0 else 0.0 
         for packet, delay in zip(packet_lengths_original, queue_delays_original)
     ]
     data['LLM Throughput'] = [
-        float(packet) / float(delay) if delay != 0 else 0.0 
+        float(packet/1024) / float(delay/1000000) if delay != 0 else 0.0 
         for packet, delay in zip(packet_lengths_llm, queue_delays_llm)
     ]
     
-        # Calculate CDF for each of the relevant columns and add them as new rows
-    cdf_data = {
-        'Original Loss CDF': np.cumsum(losses_original[:min_length]),
-        'Original Queue Delay CDF': np.cumsum(queue_delays_original[:min_length]),
-        'Original Packet Length CDF': np.cumsum(packet_lengths_original[:min_length]),
-        'LLM Loss CDF': np.cumsum(losses_llm[:min_length]),
-        'LLM Queue Delay CDF': np.cumsum(queue_delays_llm[:min_length]),
-        'LLM Packet Length CDF': np.cumsum(packet_lengths_llm[:min_length]),
-        'Original Throughput CDF': np.cumsum(data['Original Throughput']),
-        'LLM Throughput CDF': np.cumsum(data['LLM Throughput']),
-    }
+    # Function to calculate CDF
+    def calculate_cdf(values):
+        sorted_data = np.sort(values)
+        cumulative_data = np.cumsum(sorted_data) / np.sum(sorted_data)
+        return sorted_data, cumulative_data
     
-    # Add CDF values as new rows
-    cdf_df = pd.DataFrame(cdf_data)  # Create rows labeled 'CDF'
-    # Create the DataFrame
+    # Calculate CDF for each relevant column and store sorted data & cumulative values
+    cdf_data = {}
+    for column_name in ['Original Loss', 'Original Queue Delay', 'Original Packet Length', 
+                        'LLM Loss', 'LLM Queue Delay', 'LLM Packet Length', 
+                        'Original Throughput', 'LLM Throughput']:
+        values = data[column_name]
+        sorted_data, cumulative_data = calculate_cdf(values)
+        cdf_data[column_name + ' Sorted'] = sorted_data
+        cdf_data[column_name + ' CDF'] = cumulative_data
+    
+    # Create the CDF DataFrame
+    cdf_df = pd.DataFrame(cdf_data)
+    
+    # Create the main DataFrame
     df = pd.DataFrame(data, index=steps_original[:min_length])
     
+    # Convert queue delay columns to appropriate units
+    df['Original Queue Delay'] = df['Original Queue Delay'] / 1000000  # Convert microseconds to seconds
+    df['LLM Queue Delay'] = df['LLM Queue Delay'] / 1000000  # Convert microseconds to seconds
+
+    # Print summary statistics
+    print(df.describe())
+    print("-" * 20)
+    print(cdf_df.describe())
     
     return df, cdf_df
+
