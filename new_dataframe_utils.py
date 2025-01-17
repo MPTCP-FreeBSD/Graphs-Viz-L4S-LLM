@@ -101,17 +101,11 @@ def create_dataframe(steps_original, queue_delays_original, packet_lengths_origi
     data.replace([np.inf, -np.inf], 0, inplace=True)
     data.fillna(0, inplace=True)
 
-    # # Function to calculate CDF
-    # def calculate_cdf(values):
-    #     sorted_data = np.sort(values)
-    #     cdf = np.arange(1, len(sorted_data) + 1) / len(sorted_data)
-    #     return sorted_data, cdf
-
     # Function to calculate CDF
     def calculate_cdf(values):
         sorted_data = np.sort(values)
-        cumulative_data = np.cumsum(sorted_data) / np.sum(sorted_data)
-        return sorted_data, cumulative_data
+        cdf = np.arange(1, len(sorted_data) + 1) / len(sorted_data)
+        return sorted_data, cdf
 
     # Generate CDFs for relevant columns
     cdf_data = {}

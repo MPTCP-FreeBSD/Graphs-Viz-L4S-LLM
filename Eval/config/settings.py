@@ -41,5 +41,5 @@ bar_width = 0.3
 
 figsize = (8,6)
 
-title_req = True
+title_req = False
 

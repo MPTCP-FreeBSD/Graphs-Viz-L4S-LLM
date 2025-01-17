@@ -29,7 +29,7 @@ def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, f
     # markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
     # linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed
 
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 3))
 
     for i, (column, label) in enumerate(zip(columns, labels)):
         color = colors[i % len(colors)]
@@ -67,7 +67,7 @@ def cdf_plot_line_comparison(df, index_rows, columns, labels, xlabel, ylabel, ti
     # markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
     # linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed
 
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 3))
 
     for i, (column, label) in enumerate(zip(columns, labels)):
         color = colors[i % len(colors)]
@@ -103,7 +103,7 @@ def plot_box_comparison(df, columns, labels, ylabel, title, filename, folder):
     """
     # colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed
     
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 3))
 
     # Boxplot
     box = ax.boxplot(
