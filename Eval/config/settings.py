@@ -15,6 +15,13 @@ colors = ['blue', 'orange', 'c', 'g', 'm', 'y', 'k', '#ff6347']  # Add more colo
 markers = ['', '', '', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
 linestyles = ['-', '-', '-.', ':']                      # Add more linestyles as needed
 
+
+
+colors = ['blue', 'red', 'black', 'g', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed
+markers = ['', '', '', '^', 'v', 'p', '*', 'x']       # Add more markers as needed
+linestyles = ['-', '--', '-.', ':']                      # Add more linestyles as needed
+
+
 COL_DICT = {
     'queue_type': 0,
     'burst_allowance': 1,
