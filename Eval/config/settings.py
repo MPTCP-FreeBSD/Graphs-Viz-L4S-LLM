@@ -4,7 +4,6 @@ DATA_SAVE_FOLDER = "output/datasets/"
 LOG_FILE_ORIGINAL = "./data/eval_logs_original.json"
 LOG_FILE_LLM = "./data/eval_logs_llm.json"
 SAVE_FORMATS = ['png', 'eps', 'pdf']  # Formats to save graphs
-SAVE_FORMATS = ['png']  # Formats to save graphs
 DPI = 500
 
 # colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed

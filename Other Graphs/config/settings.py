@@ -1,7 +1,6 @@
 # Configuration variables
 GRAPH_SAVE_FOLDER = "Othergraphs"
 SAVE_FORMATS = ['png', 'eps', 'pdf']  # Formats to save graphs
-SAVE_FORMATS = ['png']  # Formats to save graphs
 DPI = 500
 
 colors = ['blue', 'red', 'black', 'g', 'm', 'y', 'k', '#ff6347']  # Add more colors as needed

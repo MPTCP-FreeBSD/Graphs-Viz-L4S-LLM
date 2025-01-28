@@ -7,7 +7,7 @@ def save_plot(fig, filename, folder):
     """Save a plot in multiple formats."""
     os.makedirs(folder, exist_ok=True)
     for fmt in SAVE_FORMATS:
-        fig.savefig(f"{folder}/{filename}.{fmt}", dpi=DPI, bbox_inches='tight')
+        fig.savefig(f"{folder}/100_{filename}.{fmt}", dpi=DPI, bbox_inches='tight')
 
 def plot_line_comparison(df, columns, labels, xlabel, ylabel, title, filename, folder):
     """
